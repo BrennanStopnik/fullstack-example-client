@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import { useState, useEffect } from "react";
 import './App.css';
 
+const urlEndpoint = "http://localhost:4000"
+
 function App() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const result = await fetch(`${urlEndpoint}/blogs/all`)
+      const fetchedBlogs = await result.json()
+      console.log(fetchedBlogs)
+      setBlogs(fetchedBlogs.blogs)
+    }
+    fetchBlogs()
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {blogs.map((blog, index)=>{
+          return (
+            <div key={index}>
+              <h2>{blog.title}</h2>
+              <p>Author: {blog.author}</p>
+              <p>{blog.text}</p>
+            </div>
+          )
+        })}
       </header>
     </div>
   );
 }
 
 export default App;
+
+
