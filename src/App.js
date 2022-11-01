@@ -24,6 +24,7 @@ function App() {
             <div key={index}>
               <h2>{blog.title}</h2>
               <p>Author: {blog.author}</p>
+              <p>ID: {blog.id}</p>
               <p>{blog.text}</p>
             </div>
           )
