@@ -3,24 +3,39 @@ const { useEffect, useState } = require("react")
 
 const SingleBlog = (props) => {
 
-  const { urlEndpoint } = props
+  const { urlEndpoint, blogs } = props
   const [singleBlog, setSingleBlog] = useState({});
-  const [id, setId] = useState("7e2361f5-7648-4532-94fa-366ed86cf147")
+  const [id, setId] = useState("")
   
   useEffect(() => {
     const fetchBlog = async () => {
-      const result = await fetch(`${urlEndpoint}/blogs/get-one${id}`)
+      const result = await fetch(`${urlEndpoint}/blogs/get-one/${id}`)
       const blogPayload = await result.json()
       setSingleBlog(blogPayload.blog)
     }
     fetchBlog()
-  }, [])
+  }, [id])
 
   return (
     <div>
-      SingleBlog
+      Single Blog
       <p>{singleBlog.title}</p>
+      <p>Author: {singleBlog.author}</p>
+      <p>ID: {singleBlog.id}</p>
       <p>{singleBlog.text}</p>
+      <select value={id} onChange={(e)=>{
+        setId(e.target.value)
+      }}>
+        <option>Choose One</option>
+        {blogs.map((blog, index) => {
+          return (
+            <option value={blog.id} key={index}>
+              {blog.id}
+            </option>
+          )
+        })}
+      </select>
+      <hr/>
     </div>
   )
 }
