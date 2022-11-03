@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const CreateBlogForm = (props) => {
 
-  const { urlEndpoint } = props
+  const { urlEndpoint, setShouldRefetch } = props
 
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
@@ -14,7 +14,8 @@ const CreateBlogForm = (props) => {
   const [successMessage, setSuccessMessage] = useState("")
 
   const handlePostBlog = async () => {
-    const response = fetch(`${urlEndpoint}/blogs/create-one`, {
+    setShouldRefetch(true)
+    const response = await fetch(`${urlEndpoint}/blogs/create-one`, {
       method: 'POST',
       body: JSON.stringify({
         title,
@@ -26,6 +27,7 @@ const CreateBlogForm = (props) => {
         "Content-Type": 'application/json'
       }
     })
+    setShouldRefetch(false)
     if (response.ok !== true) {
       setSuccessMessage("There was a problem with the network")
       return;
