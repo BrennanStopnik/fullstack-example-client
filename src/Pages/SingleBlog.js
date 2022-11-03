@@ -1,11 +1,21 @@
-const { useEffect, useState } = require("react")
+import { useEffect, useState } from "react";
 
 
 const SingleBlog = (props) => {
 
-  const { urlEndpoint, blogs } = props
+  const { urlEndpoint } = props
+  const [newBlog, setNewBlog] = useState([])
   const [singleBlog, setSingleBlog] = useState({});
   const [id, setId] = useState("")
+  
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const result = await fetch(`${urlEndpoint}/blogs/all`);
+      const fetchedBlogsPayload = await result.json();
+      setNewBlog(fetchedBlogsPayload.blogs);
+    };
+    fetchBlogs();
+  }, []);
   
   useEffect(() => {
     const fetchBlog = async () => {
@@ -27,7 +37,7 @@ const SingleBlog = (props) => {
         setId(e.target.value)
       }}>
         <option>Choose One</option>
-        {blogs.map((blog, index) => {
+        {newBlog.map((blog, index) => {
           return (
             <option value={blog.id} key={index}>
               {blog.id}

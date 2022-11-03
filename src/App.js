@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import './App.css';
 import SingleBlog from "./Pages/SingleBlog";
 import CreateBlogForm from "./Pages/CreateBlogForm";
 import UpdateBlogForm from "./Pages/UpdateBlogForm";
+import './App.css';
 
-const urlEndpoint = "http://localhost:4000"
+const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -13,8 +13,7 @@ function App() {
   useEffect(() => {
     const fetchBlogs = async () => {
       const result = await fetch(`${urlEndpoint}/blogs/all`)
-      const fetchedBlogs = await result.json()
-      console.log(fetchedBlogs)
+      const fetchedBlogs = await result.json();
       setBlogs(fetchedBlogs.blogs)
     }
     fetchBlogs()
@@ -23,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h3>{shouldRefetch && "Refetching"}</h3>
         <UpdateBlogForm
           urlEndpoint={urlEndpoint} 
           blogs={blogs}

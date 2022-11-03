@@ -15,17 +15,18 @@ const CreateBlogForm = (props) => {
 
   const handlePostBlog = async () => {
     setShouldRefetch(true)
+    setSuccessMessage("")
     const response = await fetch(`${urlEndpoint}/blogs/create-one`, {
       method: 'POST',
+      headers: {
+        "Content-Type": 'application/json'
+      }, 
       body: JSON.stringify({
         title,
         text,
         author,
         categories
       }),
-      headers: {
-        "Content-Type": 'application/json'
-      }
     })
     setShouldRefetch(false)
     if (response.ok !== true) {
@@ -45,13 +46,13 @@ const CreateBlogForm = (props) => {
       <h1>Create Blog Form</h1>
       <h3>{successMessage}</h3>
       <label>Title: </label>
-      <input typeof="text" onChange={(e)=>{
+      <input type="text" onChange={(e)=>{
         setTitle(e.target.value)
       }}/>
       <br/>
       <br/>
       <label>Author: </label>
-      <input typeof="text" onChange={(e)=>{
+      <input type="text" onChange={(e)=>{
         setAuthor(e.target.value)
       }}/>
       <br/>
