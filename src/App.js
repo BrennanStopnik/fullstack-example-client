@@ -5,6 +5,7 @@ import UpdateBlogForm from "./Pages/UpdateBlogForm";
 import './App.css';
 
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+console.log(urlEndpoint);
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -13,6 +14,7 @@ function App() {
   useEffect(() => {
     const fetchBlogs = async () => {
       const result = await fetch(`${urlEndpoint}/blogs/all`)
+      console.log(result);
       const fetchedBlogs = await result.json();
       setBlogs(fetchedBlogs.blogs)
     }

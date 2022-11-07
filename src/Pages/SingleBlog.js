@@ -11,6 +11,7 @@ const SingleBlog = (props) => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const result = await fetch(`${urlEndpoint}/blogs/all`);
+      console.log(result);
       const fetchedBlogsPayload = await result.json();
       setNewBlog(fetchedBlogsPayload.blogs);
     };
@@ -20,6 +21,7 @@ const SingleBlog = (props) => {
   useEffect(() => {
     const fetchBlog = async () => {
       const result = await fetch(`${urlEndpoint}/blogs/get-one/${id}`)
+      console.log(result);
       const blogPayload = await result.json()
       setSingleBlog(blogPayload.blog)
     }

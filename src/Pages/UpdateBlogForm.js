@@ -14,6 +14,7 @@ const UpdateBlogForm = (props) => {
   useEffect(() => {
     const fetchedBlog = async () => {
       const result = await fetch(`${urlEndpoint}/blogs/get-one/${id}`);
+      console.log(result);
       const fetchedBlogToUpdate = await result.json();
       setTitle(fetchedBlogToUpdate.blog.title);
       setAuthor(fetchedBlogToUpdate.blog.author);
@@ -35,8 +36,8 @@ const UpdateBlogForm = (props) => {
         author,
         text
       }),
-      
     })
+    console.log(response);
     const updatePayload = await response.json();
     setShouldRefetch(false);
   };

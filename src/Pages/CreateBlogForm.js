@@ -28,6 +28,7 @@ const CreateBlogForm = (props) => {
         categories
       }),
     })
+    console.log(response);
     setShouldRefetch(false)
     if (response.ok !== true) {
       setSuccessMessage("There was a problem with the network")
